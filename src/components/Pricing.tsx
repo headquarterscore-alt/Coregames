@@ -1,7 +1,8 @@
-import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart } from 'lucide-react';
+import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart, Trophy } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { stripeProducts } from '../stripe-config';
+import DonationLeaderboard from './DonationLeaderboard';
 
 interface PricingProps {
   affiliateCode?: string;
@@ -13,6 +14,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
   const [isDonating, setIsDonating] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   useEffect(() => {
     if (affiliateCode) {
@@ -381,6 +383,14 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                     {isDonating ? 'Redirecting...' : 'Make a Donation'}
                   </button>
 
+                  <button
+                    onClick={() => setShowLeaderboard(true)}
+                    className="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-yellow-500/50 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 border-2 border-yellow-500/30"
+                  >
+                    <Trophy className="w-6 h-6" />
+                    View Donation Leaderboard
+                  </button>
+
                   <div className="bg-pink-500/10 border border-pink-500/30 rounded-lg p-4">
                     <p className="text-gray-400 text-sm text-center">
                       You'll be redirected to Stripe to securely complete your donation with your chosen amount
@@ -396,6 +406,11 @@ export default function Pricing({ affiliateCode }: PricingProps) {
           </div>
         </div>
       </div>
+
+      <DonationLeaderboard
+        isOpen={showLeaderboard}
+        onClose={() => setShowLeaderboard(false)}
+      />
     </section>
   );
 }
