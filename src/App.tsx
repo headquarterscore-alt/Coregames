@@ -1,27 +1,33 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Header } from './components/Header';
-import { Home } from './pages/Home';
-import { Pricing } from './pages/Pricing';
-import { Success } from './pages/Success';
-import { LoginPage } from './pages/LoginPage';
-import { SignupPage } from './pages/SignupPage';
-import { DashboardPage } from './pages/DashboardPage';
+import { useEffect, useState } from 'react';
+import Hero from './components/Hero';
+import Pricing from './components/Pricing';
+import Affiliate from './components/Affiliate';
+import Footer from './components/Footer';
 
 function App() {
+  const [affiliateCode, setAffiliateCode] = useState<string | undefined>();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (ref) {
+      setAffiliateCode(ref);
+      localStorage.setItem('affiliateCode', ref);
+    } else {
+      const stored = localStorage.getItem('affiliateCode');
+      if (stored) {
+        setAffiliateCode(stored);
+      }
+    }
+  }, []);
+
   return (
-    <Router>
-      <div className="min-h-screen bg-black">
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/success" element={<Success />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="min-h-screen bg-black">
+      <Hero />
+      <Pricing affiliateCode={affiliateCode} />
+      <Affiliate />
+      <Footer />
+    </div>
   );
 }
 

@@ -53,7 +53,10 @@ Deno.serve(async (req: Request) => {
         {
           price_data: {
             currency: 'usd',
-            product: 'prod_TDYDWSxZsU330z',
+            product_data: {
+              name: 'DuelCore Donation',
+              description: `Support DuelCore development - $${amount} donation`,
+            },
             unit_amount: Math.round(amount * 100),
           },
           quantity: 1,
