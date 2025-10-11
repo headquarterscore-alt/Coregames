@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { stripeProducts } from '../stripe-config';
 import DonationLeaderboard from './DonationLeaderboard';
-import DonationModal from './DonationModal';
 
 interface PricingProps {
   affiliateCode?: string;
@@ -14,7 +13,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
-  const [showDonationModal, setShowDonationModal] = useState(false);
+  const [isDonating, setIsDonating] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   useEffect(() => {
@@ -96,8 +95,9 @@ export default function Pricing({ affiliateCode }: PricingProps) {
     }
   };
 
-  const handleDonate = () => {
-    setShowDonationModal(true);
+  const handleDonate = async () => {
+    setIsDonating(true);
+    window.location.href = 'https://buy.stripe.com/6oUbJ30Bu4SabJk9Tr7bW03';
   };
 
   return (
@@ -376,10 +376,11 @@ export default function Pricing({ affiliateCode }: PricingProps) {
 
                   <button
                     onClick={handleDonate}
-                    className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3"
+                    disabled={isDonating}
+                    className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
                   >
                     <Heart className="w-6 h-6" />
-                    Make a Donation
+                    {isDonating ? 'Redirecting...' : 'Make a Donation'}
                   </button>
 
                   <button
@@ -405,11 +406,6 @@ export default function Pricing({ affiliateCode }: PricingProps) {
           </div>
         </div>
       </div>
-
-      <DonationModal
-        isOpen={showDonationModal}
-        onClose={() => setShowDonationModal(false)}
-      />
 
       <DonationLeaderboard
         isOpen={showLeaderboard}
