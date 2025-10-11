@@ -95,9 +95,6 @@ export default function Affiliate() {
           <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-green-400 via-emerald-300 to-cyan-300 bg-clip-text text-transparent">
             Earn 30% Commission
           </h2>
-          <p className="text-2xl text-gray-400 max-w-3xl mx-auto">
-            Share Core Games and earn $2.99 for every VIP subscription
-          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
