@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth';
 import { SubscriptionStatus } from './components/SubscriptionStatus';
 import { AuthForm } from './components/AuthForm';
+import { Pricing } from './pages/Pricing';
 import { Success } from './pages/Success';
 import { LogOut, CreditCard, Home } from 'lucide-react';
 
