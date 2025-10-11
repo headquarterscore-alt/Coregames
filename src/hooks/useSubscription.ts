@@ -1,24 +1,24 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from './useAuth';
-import { getProductByPriceId } from '../stripe-config';
 
-export interface UserSubscription {
+interface Subscription {
   customer_id: string;
   subscription_id: string | null;
-  subscription_status: 'not_started' | 'incomplete' | 'incomplete_expired' | 'trialing' | 'active' | 'past_due' | 'canceled' | 'unpaid' | 'paused' | null;
+  subscription_status: string;
   price_id: string | null;
   current_period_start: number | null;
   current_period_end: number | null;
-  cancel_at_period_end: boolean | null;
+  cancel_at_period_end: boolean;
   payment_method_brand: string | null;
   payment_method_last4: string | null;
 }
 
 export function useSubscription() {
   const { user } = useAuth();
-  const [subscription, setSubscription] = useState<UserSubscription | null>(null);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -29,18 +29,23 @@ export function useSubscription() {
 
     const fetchSubscription = async () => {
       try {
+        setLoading(true);
+        setError(null);
+
         const { data, error } = await supabase
           .from('stripe_user_subscriptions')
           .select('*')
-          .single();
+          .maybeSingle();
 
-        if (error && error.code !== 'PGRST116') {
+        if (error) {
           console.error('Error fetching subscription:', error);
+          setError(error.message);
         } else {
           setSubscription(data);
         }
-      } catch (error) {
-        console.error('Error fetching subscription:', error);
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        setError('An unexpected error occurred');
       } finally {
         setLoading(false);
       }
@@ -49,21 +54,16 @@ export function useSubscription() {
     fetchSubscription();
   }, [user]);
 
-  const getActivePlan = () => {
-    if (!subscription || !subscription.price_id || subscription.subscription_status !== 'active') {
-      return null;
-    }
-
-    const product = getProductByPriceId(subscription.price_id);
-    return product?.name || null;
-  };
-
-  const isActive = subscription?.subscription_status === 'active';
-
   return {
     subscription,
     loading,
-    isActive,
-    activePlan: getActivePlan(),
+    error,
+    refetch: () => {
+      if (user) {
+        setLoading(true);
+        // Re-trigger the effect
+        setSubscription(null);
+      }
+    },
   };
 }
