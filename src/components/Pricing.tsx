@@ -12,6 +12,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
+  const [donationAmount, setDonationAmount] = useState(5);
   const [isDonating, setIsDonating] = useState(false);
 
   useEffect(() => {
@@ -95,7 +96,41 @@ export default function Pricing({ affiliateCode }: PricingProps) {
 
   const handleDonate = async () => {
     setIsDonating(true);
-    window.location.href = 'https://buy.stripe.com/6oUbJ30Bu4SabJk9Tr7bW03';
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-donation`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            amount: donationAmount,
+            success_url: `${window.location.origin}/success`,
+            cancel_url: window.location.href,
+            email: email || undefined,
+            name: name || undefined,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.error) {
+        alert('Donation error: ' + data.error);
+        setIsDonating(false);
+        return;
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error('Donation error:', error);
+      alert('An error occurred. Please try again.');
+      setIsDonating(false);
+    }
   };
 
   return (
@@ -368,24 +403,62 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                 </div>
 
                 <div className="space-y-6">
-                  <p className="text-gray-300 text-center mb-6">
-                    Click below to choose your donation amount and support the project
-                  </p>
+                  <div>
+                    <label className="block text-gray-400 mb-3">Donation Amount</label>
+                    <div className="relative">
+                      <span className="absolute left-5 top-1/2 -translate-y-1/2 text-2xl font-bold text-gray-400">$</span>
+                      <input
+                        type="number"
+                        min="1"
+                        max="10000"
+                        value={donationAmount}
+                        onChange={(e) => setDonationAmount(Number(e.target.value))}
+                        className="w-full pl-12 pr-6 py-4 bg-black/50 border-2 border-gray-700 rounded-xl text-white text-2xl font-bold placeholder-gray-500 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500/50 transition-all duration-300"
+                        placeholder="25"
+                      />
+                    </div>
+                    <p className="text-sm text-gray-500 mt-2">Enter any amount between $1 and $10,000</p>
+                  </div>
+
+                  <div className="grid grid-cols-4 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setDonationAmount(5)}
+                      className="py-2 px-3 bg-gray-800 hover:bg-pink-600 text-white rounded-lg font-semibold transition-all duration-200 hover:scale-105"
+                    >
+                      $5
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDonationAmount(10)}
+                      className="py-2 px-3 bg-gray-800 hover:bg-pink-600 text-white rounded-lg font-semibold transition-all duration-200 hover:scale-105"
+                    >
+                      $10
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDonationAmount(25)}
+                      className="py-2 px-3 bg-gray-800 hover:bg-pink-600 text-white rounded-lg font-semibold transition-all duration-200 hover:scale-105"
+                    >
+                      $25
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDonationAmount(50)}
+                      className="py-2 px-3 bg-gray-800 hover:bg-pink-600 text-white rounded-lg font-semibold transition-all duration-200 hover:scale-105"
+                    >
+                      $50
+                    </button>
+                  </div>
 
                   <button
                     onClick={handleDonate}
-                    disabled={isDonating}
-                    className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
+                    disabled={isDonating || donationAmount < 1}
+                    className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
                   >
-                    <Heart className="w-6 h-6" />
-                    {isDonating ? 'Redirecting...' : 'Make a Donation'}
+                    <Heart className="w-5 h-5" />
+                    {isDonating ? 'Processing...' : `Donate $${donationAmount}`}
                   </button>
-
-                  <div className="bg-pink-500/10 border border-pink-500/30 rounded-lg p-4">
-                    <p className="text-gray-400 text-sm text-center">
-                      You'll be redirected to Stripe to securely complete your donation with your chosen amount
-                    </p>
-                  </div>
                 </div>
 
                 <p className="text-center text-gray-500 text-xs mt-4">
