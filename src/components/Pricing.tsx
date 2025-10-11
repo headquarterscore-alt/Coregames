@@ -1,9 +1,7 @@
-import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart, Trophy } from 'lucide-react';
+import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { stripeProducts } from '../stripe-config';
-import DonationLeaderboard from './DonationLeaderboard';
-import DonationModal from './DonationModal';
 
 interface PricingProps {
   affiliateCode?: string;
@@ -14,8 +12,8 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
-  const [showDonationModal, setShowDonationModal] = useState(false);
-  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [donationAmount, setDonationAmount] = useState(5);
+  const [isDonating, setIsDonating] = useState(false);
 
   useEffect(() => {
     if (affiliateCode) {
@@ -96,8 +94,43 @@ export default function Pricing({ affiliateCode }: PricingProps) {
     }
   };
 
-  const handleDonate = () => {
-    setShowDonationModal(true);
+  const handleDonate = async () => {
+    setIsDonating(true);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-donation`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            amount: donationAmount,
+            success_url: `${window.location.origin}/success`,
+            cancel_url: window.location.href,
+            email: email || undefined,
+            name: name || undefined,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.error) {
+        alert('Donation error: ' + data.error);
+        setIsDonating(false);
+        return;
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error('Donation error:', error);
+      alert('An error occurred. Please try again.');
+      setIsDonating(false);
+    }
   };
 
   return (
@@ -126,20 +159,9 @@ export default function Pricing({ affiliateCode }: PricingProps) {
           <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent">
             Core Games - DuelCore
           </h2>
-          <p className="text-2xl text-gray-400 max-w-2xl mx-auto mb-8">
-            Choose how you want to support DuelCore
+          <p className="text-2xl text-gray-400 max-w-2xl mx-auto">
+            Support DuelCore and unlock exclusive VIP features
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-lg">
-            <div className="flex items-center gap-2 bg-blue-500/10 px-6 py-3 rounded-lg border border-blue-500/30">
-              <Gem className="w-5 h-5 text-blue-400" />
-              <span className="text-white font-semibold">VIP Subscription</span>
-            </div>
-            <span className="text-gray-600">or</span>
-            <div className="flex items-center gap-2 bg-pink-500/10 px-6 py-3 rounded-lg border border-pink-500/30">
-              <Heart className="w-5 h-5 text-pink-400" />
-              <span className="text-white font-semibold">One-Time Donation</span>
-            </div>
-          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
@@ -359,42 +381,48 @@ export default function Pricing({ affiliateCode }: PricingProps) {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-pink-600 via-purple-600 to-red-600 p-1 rounded-3xl shadow-2xl shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-500 hover:scale-[1.02] mt-8">
+            <div className="bg-gradient-to-br from-pink-600/20 via-purple-600/20 to-red-600/20 p-1 rounded-3xl shadow-2xl mt-8">
               <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-8">
-                <div className="text-center mb-6">
-                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <Heart className="w-7 h-7 text-pink-500" />
-                    <h3 className="text-3xl font-bold text-white">One-Time Donation</h3>
-                  </div>
-                  <p className="text-gray-400 text-sm">Support us with any amount you choose</p>
+                <div className="flex items-center gap-3 mb-6">
+                  <Heart className="w-6 h-6 text-pink-500" />
+                  <h3 className="text-2xl font-bold text-white">Support the Project</h3>
                 </div>
 
+                <p className="text-gray-400 mb-6">
+                  Love what we're building? Show your support with a donation of any amount.
+                </p>
+
                 <div className="space-y-6">
-                  <p className="text-gray-300 text-center mb-6">
-                    Click below to choose your donation amount and support the project
-                  </p>
+                  <div>
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-gray-400">Donation Amount</span>
+                      <span className="text-3xl font-bold text-white">${donationAmount}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="500"
+                      value={donationAmount}
+                      onChange={(e) => setDonationAmount(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb"
+                      style={{
+                        background: `linear-gradient(to right, rgb(236, 72, 153) 0%, rgb(236, 72, 153) ${(donationAmount / 500) * 100}%, rgb(55, 65, 81) ${(donationAmount / 500) * 100}%, rgb(55, 65, 81) 100%)`
+                      }}
+                    />
+                    <div className="flex justify-between text-xs text-gray-500 mt-2">
+                      <span>$1</span>
+                      <span>$500</span>
+                    </div>
+                  </div>
 
                   <button
                     onClick={handleDonate}
-                    className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3"
+                    disabled={isDonating}
+                    className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
                   >
-                    <Heart className="w-6 h-6" />
-                    Make a Donation
+                    <Heart className="w-5 h-5" />
+                    {isDonating ? 'Processing...' : `Donate $${donationAmount}`}
                   </button>
-
-                  <button
-                    onClick={() => setShowLeaderboard(true)}
-                    className="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-yellow-500/50 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-3 border-2 border-yellow-500/30"
-                  >
-                    <Trophy className="w-6 h-6" />
-                    View Donation Leaderboard
-                  </button>
-
-                  <div className="bg-pink-500/10 border border-pink-500/30 rounded-lg p-4">
-                    <p className="text-gray-400 text-sm text-center">
-                      You'll be redirected to Stripe to securely complete your donation with your chosen amount
-                    </p>
-                  </div>
                 </div>
 
                 <p className="text-center text-gray-500 text-xs mt-4">
@@ -405,16 +433,6 @@ export default function Pricing({ affiliateCode }: PricingProps) {
           </div>
         </div>
       </div>
-
-      <DonationModal
-        isOpen={showDonationModal}
-        onClose={() => setShowDonationModal(false)}
-      />
-
-      <DonationLeaderboard
-        isOpen={showLeaderboard}
-        onClose={() => setShowLeaderboard(false)}
-      />
     </section>
   );
 }
