@@ -9,6 +9,16 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+export interface Affiliate {
+  id: string;
+  code: string;
+  name: string;
+  email: string;
+  commission_rate: number;
+  total_earnings: number;
+  created_at: string;
+}
+
 export type Database = {
   public: {
     Tables: {

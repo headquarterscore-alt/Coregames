@@ -10,21 +10,21 @@ export interface StripeProduct {
 
 export const stripeProducts: StripeProduct[] = [
   {
+    id: 'prod_TDXLz3Qq6vhAhb',
+    priceId: 'price_1SH6H43ftBoDvYm11sx2OYKX',
+    name: 'VIP',
+    description: 'VIP Subscription',
+    price_per_unit: 9.99,
+    currency_symbol: '$',
+    mode: 'subscription'
+  },
+  {
     id: 'prod_TDZG8DZQgj2Ay0',
     priceId: 'price_1SH88S3ftBoDvYm1RSTaZ4En',
     name: 'Donation',
     description: 'Support DuelCore',
     currency_symbol: '$',
     mode: 'payment'
-  },
-  {
-    id: 'prod_TDXLz3Qq6vhAhb',
-    priceId: 'price_1SH6H43ftBoDvYm11sx2OYKX',
-    name: 'VIP',
-    description: 'VIP Subscription',
-    price_per_unit: 9.99,
-    currency_symbol: '€',
-    mode: 'subscription'
   }
 ];
 
