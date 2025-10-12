@@ -427,9 +427,10 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                     <h3 className="text-3xl font-bold text-white">
                       Donation - <button
                         onClick={openLeaderboard}
-                        className="text-pink-400 hover:text-pink-300 transition-colors cursor-pointer underline decoration-pink-500/50 hover:decoration-pink-400"
+                        className="text-pink-400 hover:text-pink-300 transition-all cursor-pointer underline decoration-pink-500/50 hover:decoration-pink-400 hover:scale-105 inline-flex items-center gap-1"
                       >
                         Leaderboard
+                        <Trophy className="w-6 h-6 inline-block" />
                       </button>
                     </h3>
                   </div>
