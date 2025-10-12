@@ -161,7 +161,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   };
 
   return (
-    <section id="pricing" className="min-h-screen pt-24 pb-16 px-6 relative overflow-hidden">
+    <section id="pricing" className="min-h-screen pt-20 pb-16 px-6 relative overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
         style={{ backgroundImage: "url('/LOGO DuelCore (2000x2000) Henri.png')" }}
@@ -412,13 +412,9 @@ export default function Pricing({ affiliateCode }: PricingProps) {
               <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-8">
                 <div className="text-center mb-6">
                   <h3 className="text-3xl font-bold text-white mb-2">Donation ❤️</h3>
-                  <p className="text-gray-400 text-sm">Support us with any amount you choose</p>
                 </div>
 
                 <div className="space-y-6">
-                  <p className="text-gray-300 text-center mb-6">
-                    Click below to choose your donation amount and support the project
-                  </p>
 
                   <button
                     onClick={handleDonate}
