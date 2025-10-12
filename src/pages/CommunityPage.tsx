@@ -62,32 +62,39 @@ export default function CommunityPage() {
             </h1>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-cyan-500/30 rounded-3xl p-12 shadow-2xl shadow-cyan-500/20">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
-              Connect With Us
-            </h2>
+          <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 border-2 border-cyan-500/30 rounded-3xl p-12 shadow-2xl shadow-cyan-500/20 overflow-hidden">
+            <div
+              className="absolute inset-0 opacity-20 bg-cover bg-center"
+              style={{ backgroundImage: "url('/image copy.png')" }}
+            />
 
-            <div className="space-y-6">
-              {platforms.map((platform) => (
-                <a
-                  key={platform.name}
-                  href={platform.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center justify-between p-6 rounded-xl bg-gradient-to-r ${platform.color} text-white font-semibold hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-2xl group`}
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="text-4xl">{platform.icon}</span>
-                    <span className="text-2xl">{platform.name}</span>
-                  </div>
-                  <ExternalLink className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                </a>
-              ))}
+            <div className="relative z-10">
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                Connect With Us
+              </h2>
+
+              <div className="space-y-6">
+                {platforms.map((platform) => (
+                  <a
+                    key={platform.name}
+                    href={platform.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center justify-between p-6 rounded-xl bg-gradient-to-r ${platform.color} text-white font-semibold hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-2xl group`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="text-4xl">{platform.icon}</span>
+                      <span className="text-2xl">{platform.name}</span>
+                    </div>
+                    <ExternalLink className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                ))}
+              </div>
+
+              <p className="text-center text-gray-400 text-sm mt-8">
+                Follow us on all platforms to stay up to date with the latest news and updates
+              </p>
             </div>
-
-            <p className="text-center text-gray-400 text-sm mt-8">
-              Follow us on all platforms to stay up to date with the latest news and updates
-            </p>
           </div>
         </div>
       </section>
