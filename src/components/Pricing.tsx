@@ -1,7 +1,8 @@
-import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart, X, Trophy } from 'lucide-react';
+import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart, X, Trophy, CheckCircle2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { stripeProducts } from '../stripe-config';
+import { useSubscription } from '../hooks/useSubscription';
 
 interface DonationLeaderboardEntry {
   id: string;
@@ -23,6 +24,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   const [isDonating, setIsDonating] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState<DonationLeaderboardEntry[]>([]);
+  const { subscription } = useSubscription();
 
   useEffect(() => {
     // Reset loading states when component mounts or updates
@@ -219,14 +221,21 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                       <h3 className="text-2xl font-bold text-white">VIP Access</h3>
                       <Gem className="w-6 h-6 text-purple-400" />
                     </div>
-                    <a
-                      href="/affiliate"
-                      className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1.5 bg-cyan-500/10 px-4 py-2 rounded-lg border border-cyan-500/30 hover:border-cyan-500/50"
-                    >
-                      <Star className="w-4 h-4" />
-                      Create your affiliate account
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+                    {subscription && (subscription.subscription_status === 'active' || subscription.subscription_status === 'trialing') ? (
+                      <div className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 px-5 py-2.5 rounded-full shadow-lg shadow-green-500/30 animate-pulse">
+                        <CheckCircle2 className="w-5 h-5 text-white" />
+                        <span className="text-white font-bold text-sm">Active VIP Member</span>
+                      </div>
+                    ) : (
+                      <a
+                        href="/affiliate"
+                        className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1.5 bg-cyan-500/10 px-4 py-2 rounded-lg border border-cyan-500/30 hover:border-cyan-500/50"
+                      >
+                        <Star className="w-4 h-4" />
+                        Create your affiliate account
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
                   </div>
                   <div className="flex items-baseline justify-center gap-2">
                     <span className="text-5xl font-bold text-white">$9.99</span>
@@ -348,36 +357,51 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                 </button>
               </div>
 
-              <form onSubmit={handleSubscribe} className="space-y-5">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Enter your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    className="w-full px-6 py-4 bg-black/50 border-2 border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all duration-300"
-                  />
+              {subscription && (subscription.subscription_status === 'active' || subscription.subscription_status === 'trialing') ? (
+                <div className="bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500/50 rounded-xl p-8 text-center">
+                  <CheckCircle2 className="w-16 h-16 text-green-400 mx-auto mb-4" />
+                  <h4 className="text-2xl font-bold text-white mb-2">You're Already a VIP!</h4>
+                  <p className="text-gray-300 mb-4">
+                    You have an active VIP subscription. Enjoy all your exclusive benefits!
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    {subscription.current_period_end && (
+                      <>Next billing date: {new Date(subscription.current_period_end * 1000).toLocaleDateString()}</>
+                    )}
+                  </p>
                 </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full px-6 py-4 bg-black/50 border-2 border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all duration-300"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-blue-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group"
-                >
-                  <span className="relative z-10">{isLoading ? 'Processing...' : 'Get VIP Now - $9.99/mo'}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </button>
-              </form>
+              ) : (
+                <form onSubmit={handleSubscribe} className="space-y-5">
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Enter your name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className="w-full px-6 py-4 bg-black/50 border-2 border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all duration-300"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full px-6 py-4 bg-black/50 border-2 border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 transition-all duration-300"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-blue-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 relative overflow-hidden group"
+                  >
+                    <span className="relative z-10">{isLoading ? 'Processing...' : 'Get VIP Now - $9.99/mo'}</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </button>
+                </form>
+              )}
 
               <p className="text-center text-gray-500 text-sm mt-6 flex items-center justify-center gap-2">
                 <Shield className="w-4 h-4" />
