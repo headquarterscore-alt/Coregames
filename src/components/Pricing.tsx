@@ -161,7 +161,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   };
 
   return (
-    <section id="pricing" className="min-h-screen flex items-center justify-center py-32 px-6 relative overflow-hidden">
+    <section id="pricing" className="min-h-screen pt-24 pb-16 px-6 relative overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
         style={{ backgroundImage: "url('/LOGO DuelCore (2000x2000) Henri.png')" }}
@@ -182,24 +182,13 @@ export default function Pricing({ affiliateCode }: PricingProps) {
           </div>
         )}
 
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent">
             Core Games - DuelCore
           </h2>
-          <p className="text-2xl text-gray-400 max-w-2xl mx-auto mb-8">
+          <p className="text-2xl text-gray-400 max-w-2xl mx-auto">
             Choose how you want to support DuelCore
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-lg">
-            <div className="flex items-center gap-2 bg-blue-500/10 px-6 py-3 rounded-lg border border-blue-500/30">
-              <Gem className="w-5 h-5 text-blue-400" />
-              <span className="text-white font-semibold">VIP Subscription</span>
-            </div>
-            <span className="text-gray-600">or</span>
-            <div className="flex items-center gap-2 bg-pink-500/10 px-6 py-3 rounded-lg border border-pink-500/30">
-              <Heart className="w-5 h-5 text-pink-400" />
-              <span className="text-white font-semibold">One-Time Donation</span>
-            </div>
-          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
