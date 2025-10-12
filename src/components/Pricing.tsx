@@ -192,29 +192,30 @@ export default function Pricing({ affiliateCode }: PricingProps) {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
-          <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-purple-600 p-1 rounded-3xl shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-500 hover:scale-[1.02]">
-            <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-10">
-              <div className="text-center mb-6">
-                <div className="flex flex-col items-center gap-3 mb-2">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-2xl font-bold text-white">VIP Access</h3>
-                    <Gem className="w-6 h-6 text-purple-400" />
+        <div className="flex justify-center">
+          <div className="grid lg:grid-cols-2 gap-8 max-w-7xl w-full">
+            <div className="bg-gradient-to-br from-blue-600 via-cyan-500 to-purple-600 p-1 rounded-3xl shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-500 hover:scale-[1.02]">
+              <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-10">
+                <div className="text-center mb-6">
+                  <div className="flex flex-col items-center gap-3 mb-2">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-2xl font-bold text-white">VIP Access</h3>
+                      <Gem className="w-6 h-6 text-purple-400" />
+                    </div>
+                    <a
+                      href="/affiliate"
+                      className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1.5 bg-cyan-500/10 px-4 py-2 rounded-lg border border-cyan-500/30 hover:border-cyan-500/50"
+                    >
+                      <Star className="w-4 h-4" />
+                      Create your affiliate account
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
                   </div>
-                  <a
-                    href="/affiliate"
-                    className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1.5 bg-cyan-500/10 px-4 py-2 rounded-lg border border-cyan-500/30 hover:border-cyan-500/50"
-                  >
-                    <Star className="w-4 h-4" />
-                    Create your affiliate account
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
+                  <div className="flex items-baseline justify-center gap-2">
+                    <span className="text-5xl font-bold text-white">$9.99</span>
+                    <span className="text-gray-400">/month</span>
+                  </div>
                 </div>
-                <div className="flex items-baseline justify-center gap-2">
-                  <span className="text-5xl font-bold text-white">$9.99</span>
-                  <span className="text-gray-400">/month</span>
-                </div>
-              </div>
 
               <div className="space-y-4 mb-10">
                 <div className={`space-y-4 ${!showAllFeatures ? 'max-h-[400px] overflow-hidden' : ''}`}>
@@ -364,79 +365,80 @@ export default function Pricing({ affiliateCode }: PricingProps) {
             </div>
           </div>
 
-          <div className="space-y-8">
-            <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-3xl shadow-2xl">
-              <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <h3 className="text-2xl font-bold text-white">Contact Support</h3>
-                </div>
-
-                <p className="text-gray-400 mb-6">
-                  Need help or have questions? Reach out to our support team on Discord.
-                </p>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 text-white">
-                    <span className="text-gray-400">Discord:</span>
-                    <span className="font-mono bg-gray-800 px-3 py-1.5 rounded-lg">h9999</span>
+            <div className="space-y-8">
+              <div className="bg-gradient-to-br from-pink-600 via-purple-600 to-red-600 p-1 rounded-3xl shadow-2xl shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-500 hover:scale-[1.02]">
+                <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-8">
+                  <div className="text-center mb-6">
+                    <h3 className="text-3xl font-bold text-white mb-2">Support the server</h3>
                   </div>
 
-                  <a
-                    href="https://discord.com/users/239327215651651596"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-3 rounded-xl font-semibold hover:shadow-xl hover:shadow-blue-500/50 hover:scale-[1.02] transition-all duration-300"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    Message on Discord
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
+                  <div className="space-y-6">
 
-                <div className="mt-6 pt-6 border-t border-gray-800">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src="/ssss.gif"
-                      alt="Henri"
-                      className="h-12 w-12 rounded-full border-2 border-gray-700"
-                    />
-                    <div>
-                      <p className="text-white font-semibold">Henri</p>
-                      <p className="text-gray-400 text-sm">Core Games Creator</p>
+                    <button
+                      onClick={handleDonate}
+                      disabled={isDonating}
+                      className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
+                    >
+                      {isDonating ? 'Redirecting...' : 'Make a Donation'}
+                    </button>
+
+                    <button
+                      onClick={openLeaderboard}
+                      className="w-full bg-gradient-to-r from-yellow-600 to-orange-500 text-white py-4 rounded-xl font-semibold text-lg hover:shadow-xl hover:shadow-yellow-500/50 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      <Trophy className="w-5 h-5" />
+                      View Leaderboard
+                    </button>
+                  </div>
+
+                  <p className="text-center text-gray-500 text-xs mt-4">
+                    Your support helps us continue improving Core Games
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-1 rounded-3xl shadow-2xl mt-8">
+                <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <h3 className="text-2xl font-bold text-white">Contact Support</h3>
+                  </div>
+
+                  <p className="text-gray-400 mb-6">
+                    Need help or have questions? Reach out to our support team on Discord.
+                  </p>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 text-white">
+                      <span className="text-gray-400">Discord:</span>
+                      <span className="font-mono bg-gray-800 px-3 py-1.5 rounded-lg">h9999</span>
+                    </div>
+
+                    <a
+                      href="https://discord.com/users/239327215651651596"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-3 rounded-xl font-semibold hover:shadow-xl hover:shadow-blue-500/50 hover:scale-[1.02] transition-all duration-300"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      Message on Discord
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+
+                  <div className="mt-6 pt-6 border-t border-gray-800">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src="/ssss.gif"
+                        alt="Henri"
+                        className="h-12 w-12 rounded-full border-2 border-gray-700"
+                      />
+                      <div>
+                        <p className="text-white font-semibold">Henri</p>
+                        <p className="text-gray-400 text-sm">Core Games Creator</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-pink-600 via-purple-600 to-red-600 p-1 rounded-3xl shadow-2xl shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-500 hover:scale-[1.02] mt-8">
-              <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-3xl font-bold text-white mb-2">Support the server</h3>
-                </div>
-
-                <div className="space-y-6">
-
-                  <button
-                    onClick={handleDonate}
-                    disabled={isDonating}
-                    className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
-                  >
-                    {isDonating ? 'Redirecting...' : 'Make a Donation'}
-                  </button>
-
-                  <button
-                    onClick={openLeaderboard}
-                    className="w-full bg-gradient-to-r from-yellow-600 to-orange-500 text-white py-4 rounded-xl font-semibold text-lg hover:shadow-xl hover:shadow-yellow-500/50 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
-                  >
-                    <Trophy className="w-5 h-5" />
-                    View Leaderboard
-                  </button>
-                </div>
-
-                <p className="text-center text-gray-500 text-xs mt-4">
-                  Your support helps us continue improving Core Games
-                </p>
               </div>
             </div>
           </div>
