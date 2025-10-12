@@ -1,7 +1,15 @@
-import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart } from 'lucide-react';
+import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart, X, Trophy } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { stripeProducts } from '../stripe-config';
+
+interface DonationLeaderboardEntry {
+  id: string;
+  username: string;
+  amount: number;
+  created_at: string;
+  updated_at: string;
+}
 
 interface PricingProps {
   affiliateCode?: string;
@@ -13,6 +21,8 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showAllFeatures, setShowAllFeatures] = useState(false);
   const [isDonating, setIsDonating] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [leaderboardData, setLeaderboardData] = useState<DonationLeaderboardEntry[]>([]);
 
   useEffect(() => {
     if (affiliateCode) {
@@ -22,6 +32,23 @@ export default function Pricing({ affiliateCode }: PricingProps) {
       }
     }
   }, [affiliateCode]);
+
+  const fetchLeaderboard = async () => {
+    const { data, error } = await supabase
+      .from('donation_leaderboard')
+      .select('*')
+      .order('amount', { ascending: false })
+      .limit(10);
+
+    if (!error && data) {
+      setLeaderboardData(data);
+    }
+  };
+
+  const openLeaderboard = () => {
+    setShowLeaderboard(true);
+    fetchLeaderboard();
+  };
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -397,7 +424,12 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                 <div className="text-center mb-6">
                   <div className="flex items-center justify-center gap-3 mb-2">
                     <Heart className="w-7 h-7 text-pink-500" />
-                    <h3 className="text-3xl font-bold text-white">One-Time Donation</h3>
+                    <button
+                      onClick={openLeaderboard}
+                      className="text-3xl font-bold text-white hover:text-pink-400 transition-colors cursor-pointer"
+                    >
+                      Donation
+                    </button>
                   </div>
                   <p className="text-gray-400 text-sm">Support us with any amount you choose</p>
                 </div>
@@ -430,6 +462,62 @@ export default function Pricing({ affiliateCode }: PricingProps) {
           </div>
         </div>
       </div>
+
+      {showLeaderboard && (
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-6"
+          onClick={() => setShowLeaderboard(false)}
+        >
+          <div
+            className="bg-gradient-to-b from-gray-900 to-black border-2 border-pink-500/50 rounded-3xl p-8 max-w-2xl w-full shadow-2xl shadow-pink-500/50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <Trophy className="w-8 h-8 text-yellow-500" />
+                <h2 className="text-3xl font-bold text-white">Donation Leaderboard</h2>
+              </div>
+              <button
+                onClick={() => setShowLeaderboard(false)}
+                className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {leaderboardData.length > 0 ? (
+                leaderboardData.map((entry, index) => (
+                  <div
+                    key={entry.id}
+                    className="flex items-center justify-between p-4 bg-gradient-to-r from-pink-950/40 to-purple-950/40 rounded-xl border border-pink-500/20 hover:border-pink-500/50 transition-all"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 font-bold text-white">
+                        {index + 1}
+                      </div>
+                      <span className="text-white font-semibold text-lg">{entry.username}</span>
+                    </div>
+                    <span className="text-2xl font-bold text-pink-400">${entry.amount}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-12">
+                  <Trophy className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                  <p className="text-gray-400 text-lg">No donations yet. Be the first!</p>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => setShowLeaderboard(false)}
+              className="mt-8 w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-pink-500/50 transition-all"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
