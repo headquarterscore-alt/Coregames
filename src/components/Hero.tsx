@@ -5,7 +5,7 @@ export default function Hero() {
     <>
       <Navbar />
 
-      <section className="min-h-screen flex items-center justify-center pt-20 px-6 relative overflow-hidden">
+      <section className="pt-24 pb-8 px-6 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
           style={{ backgroundImage: "url('/LOGO DuelCore (2000x2000) Henri.png')" }}

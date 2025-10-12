@@ -15,7 +15,7 @@ export default function Navbar() {
 
         <nav className="flex items-center gap-8">
           <a href="/#pricing" className="text-gray-300 hover:text-cyan-400 transition-colors font-medium">
-            VIP
+            Support
           </a>
 
           <Link to="/community" className="text-gray-300 hover:text-cyan-400 transition-colors font-medium">
