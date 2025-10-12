@@ -138,6 +138,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
             cancel_url: window.location.href,
             email: email || undefined,
             name: name || undefined,
+            affiliate_code: affiliateCode || undefined,
           }),
         }
       );

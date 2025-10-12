@@ -31,7 +31,7 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    const { amount, success_url, cancel_url, email, name } = await req.json();
+    const { amount, success_url, cancel_url, email, name, affiliate_code } = await req.json();
 
     if (!amount || amount < 1 || amount > 500) {
       return new Response(JSON.stringify({ error: 'Invalid donation amount' }), {
@@ -71,8 +71,18 @@ Deno.serve(async (req: Request) => {
       sessionParams.customer_email = email;
     }
 
+    const metadata: Record<string, string> = {};
+
     if (name) {
-      sessionParams.metadata = { donor_name: name };
+      metadata.donor_name = name;
+    }
+
+    if (affiliate_code) {
+      metadata.affiliate_code = affiliate_code;
+    }
+
+    if (Object.keys(metadata).length > 0) {
+      sessionParams.metadata = metadata;
     }
 
     const session = await stripe.checkout.sessions.create(sessionParams);
