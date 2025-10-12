@@ -221,7 +221,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                 </div>
 
               <div className="space-y-4 mb-10">
-                <div className={`space-y-4 ${!showAllFeatures ? 'max-h-[400px] overflow-hidden' : ''}`}>
+                <div className="space-y-4">
                 <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-950/40 to-transparent rounded-xl border border-blue-500/20 hover:border-blue-500/50 hover:bg-blue-950/60 transition-all duration-300 group">
                   <div className="bg-gradient-to-br from-blue-600 to-cyan-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-blue-500/50">
                     <Eye className="w-5 h-5 text-white" />
@@ -252,65 +252,69 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-cyan-950/40 to-transparent rounded-xl border border-cyan-500/20 hover:border-cyan-500/50 hover:bg-cyan-950/60 transition-all duration-300 group">
-                  <div className="bg-gradient-to-br from-cyan-600 to-blue-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-cyan-500/50">
-                    <RefreshCw className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-white font-bold text-lg">Reset Stats</span>
-                    <p className="text-gray-400 text-sm mt-1">Reset your stats in the current season</p>
-                  </div>
-                </div>
+                {showAllFeatures && (
+                  <>
+                    <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-cyan-950/40 to-transparent rounded-xl border border-cyan-500/20 hover:border-cyan-500/50 hover:bg-cyan-950/60 transition-all duration-300 group">
+                      <div className="bg-gradient-to-br from-cyan-600 to-blue-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-cyan-500/50">
+                        <RefreshCw className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-white font-bold text-lg">Reset Stats</span>
+                        <p className="text-gray-400 text-sm mt-1">Reset your stats in the current season</p>
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-yellow-950/40 to-transparent rounded-xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-yellow-950/60 transition-all duration-300 group">
-                  <div className="bg-gradient-to-br from-yellow-600 to-orange-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-yellow-500/50">
-                    <Star className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-white font-bold text-lg">Tournament Priority</span>
-                    <p className="text-gray-400 text-sm mt-1">Enter earlier in tournaments</p>
-                  </div>
-                </div>
+                    <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-yellow-950/40 to-transparent rounded-xl border border-yellow-500/20 hover:border-yellow-500/50 hover:bg-yellow-950/60 transition-all duration-300 group">
+                      <div className="bg-gradient-to-br from-yellow-600 to-orange-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-yellow-500/50">
+                        <Star className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-white font-bold text-lg">Tournament Priority</span>
+                        <p className="text-gray-400 text-sm mt-1">Enter earlier in tournaments</p>
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-indigo-950/40 to-transparent rounded-xl border border-indigo-500/20 hover:border-indigo-500/50 hover:bg-indigo-950/60 transition-all duration-300 group">
-                  <div className="bg-gradient-to-br from-indigo-600 to-purple-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-indigo-500/50">
-                    <Lightning className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-white font-bold text-lg">Queue Priority</span>
-                    <p className="text-gray-400 text-sm mt-1">Skip the line with faster queues</p>
-                  </div>
-                </div>
+                    <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-indigo-950/40 to-transparent rounded-xl border border-indigo-500/20 hover:border-indigo-500/50 hover:bg-indigo-950/60 transition-all duration-300 group">
+                      <div className="bg-gradient-to-br from-indigo-600 to-purple-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-indigo-500/50">
+                        <Lightning className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-white font-bold text-lg">Queue Priority</span>
+                        <p className="text-gray-400 text-sm mt-1">Skip the line with faster queues</p>
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-red-950/40 to-transparent rounded-xl border border-red-500/20 hover:border-red-500/50 hover:bg-red-950/60 transition-all duration-300 group">
-                  <div className="bg-gradient-to-br from-red-600 to-pink-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-red-500/50">
-                    <Shield className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-white font-bold text-lg">Ban Immunity</span>
-                    <p className="text-gray-400 text-sm mt-1">Protected from bans</p>
-                  </div>
-                </div>
+                    <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-red-950/40 to-transparent rounded-xl border border-red-500/20 hover:border-red-500/50 hover:bg-red-950/60 transition-all duration-300 group">
+                      <div className="bg-gradient-to-br from-red-600 to-pink-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-red-500/50">
+                        <Shield className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-white font-bold text-lg">Ban Immunity</span>
+                        <p className="text-gray-400 text-sm mt-1">Protected from bans</p>
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-pink-950/40 to-transparent rounded-xl border border-pink-500/20 hover:border-pink-500/50 hover:bg-pink-950/60 transition-all duration-300 group">
-                  <div className="bg-gradient-to-br from-pink-600 to-rose-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-pink-500/50">
-                    <Palette className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-white font-bold text-lg">Custom Role Color</span>
-                    <p className="text-gray-400 text-sm mt-1">Choose your own unique role color</p>
-                  </div>
-                </div>
+                    <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-pink-950/40 to-transparent rounded-xl border border-pink-500/20 hover:border-pink-500/50 hover:bg-pink-950/60 transition-all duration-300 group">
+                      <div className="bg-gradient-to-br from-pink-600 to-rose-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-pink-500/50">
+                        <Palette className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-white font-bold text-lg">Custom Role Color</span>
+                        <p className="text-gray-400 text-sm mt-1">Choose your own unique role color</p>
+                      </div>
+                    </div>
 
-                <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-amber-950/40 to-transparent rounded-xl border border-amber-500/20 hover:border-amber-500/50 hover:bg-amber-950/60 transition-all duration-300 group">
-                  <div className="bg-gradient-to-br from-amber-600 to-yellow-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-amber-500/50">
-                    <Crown className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-white font-bold text-lg">Bragging Rights</span>
-                    <p className="text-gray-400 text-sm mt-1">Show off your VIP status with pride</p>
-                  </div>
-                </div>
+                    <div className="flex items-start gap-4 p-4 bg-gradient-to-r from-amber-950/40 to-transparent rounded-xl border border-amber-500/20 hover:border-amber-500/50 hover:bg-amber-950/60 transition-all duration-300 group">
+                      <div className="bg-gradient-to-br from-amber-600 to-yellow-500 rounded-xl p-2.5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg shadow-amber-500/50">
+                        <Crown className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <span className="text-white font-bold text-lg">Bragging Rights</span>
+                        <p className="text-gray-400 text-sm mt-1">Show off your VIP status with pride</p>
+                      </div>
+                    </div>
+                  </>
+                )}
                 </div>
 
                 <button
