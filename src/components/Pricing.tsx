@@ -25,6 +25,9 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   const [leaderboardData, setLeaderboardData] = useState<DonationLeaderboardEntry[]>([]);
 
   useEffect(() => {
+    setIsLoading(false);
+    setIsDonating(false);
+
     if (affiliateCode) {
       const banner = document.getElementById('affiliate-banner');
       if (banner) {
