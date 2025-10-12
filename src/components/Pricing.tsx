@@ -162,7 +162,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   };
 
   return (
-    <section id="pricing" className="min-h-screen pt-20 pb-16 px-6 relative overflow-hidden">
+    <section id="pricing" className="min-h-screen pt-8 pb-16 px-6 relative overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
         style={{ backgroundImage: "url('/LOGO DuelCore (2000x2000) Henri.png')" }}
@@ -174,7 +174,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
         {affiliateCode && (
           <div
             id="affiliate-banner"
-            className="mb-12 bg-gradient-to-r from-green-600 to-emerald-500 text-white p-5 rounded-2xl text-center shadow-2xl shadow-green-500/20 animate-pulse"
+            className="mb-8 bg-gradient-to-r from-green-600 to-emerald-500 text-white p-5 rounded-2xl text-center shadow-2xl shadow-green-500/20 animate-pulse"
           >
             <p className="text-lg font-semibold">
               You're using affiliate code: <span className="font-mono bg-white/20 px-3 py-1 rounded">{affiliateCode}</span>
@@ -183,8 +183,8 @@ export default function Pricing({ affiliateCode }: PricingProps) {
           </div>
         )}
 
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent">
+        <div className="text-center mb-10">
+          <h2 className="text-5xl md:text-7xl font-bold text-white mb-4 bg-gradient-to-r from-white via-cyan-200 to-blue-300 bg-clip-text text-transparent">
             Core Games - DuelCore
           </h2>
           <p className="text-2xl text-gray-400 max-w-2xl mx-auto">
