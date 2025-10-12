@@ -46,7 +46,7 @@ export default function CommunityPage() {
     <div className="min-h-screen bg-black">
       <Navbar />
 
-      <section className="min-h-screen py-32 px-6 bg-gradient-to-b from-black via-gray-900 to-black">
+      <section className="min-h-screen pt-24 pb-16 px-6 bg-gradient-to-b from-black via-gray-900 to-black">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <div className="mb-8 flex justify-center">
