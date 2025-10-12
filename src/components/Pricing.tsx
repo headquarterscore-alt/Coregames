@@ -424,15 +424,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                 <div className="text-center mb-6">
                   <div className="flex items-center justify-center gap-3 mb-2">
                     <Heart className="w-7 h-7 text-pink-500" />
-                    <h3 className="text-3xl font-bold text-white">
-                      Donation - <button
-                        onClick={openLeaderboard}
-                        className="text-pink-400 hover:text-pink-300 transition-all cursor-pointer underline decoration-pink-500/50 hover:decoration-pink-400 hover:scale-105 inline-flex items-center gap-1"
-                      >
-                        Leaderboard
-                        <Trophy className="w-6 h-6 inline-block" />
-                      </button>
-                    </h3>
+                    <h3 className="text-3xl font-bold text-white">Donation</h3>
                   </div>
                   <p className="text-gray-400 text-sm">Support us with any amount you choose</p>
                 </div>
@@ -448,6 +440,14 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                     className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
                   >
                     {isDonating ? 'Redirecting...' : 'Make a Donation'}
+                  </button>
+
+                  <button
+                    onClick={openLeaderboard}
+                    className="w-full bg-gradient-to-r from-yellow-600 to-orange-500 text-white py-4 rounded-xl font-semibold text-lg hover:shadow-xl hover:shadow-yellow-500/50 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
+                  >
+                    <Trophy className="w-5 h-5" />
+                    View Leaderboard
                   </button>
 
                   <div className="bg-pink-500/10 border border-pink-500/30 rounded-lg p-4">
