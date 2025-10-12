@@ -111,7 +111,7 @@ export default function AffiliatePage() {
               {
                 icon: DollarSign,
                 title: '30% Commission',
-                description: 'Earn $2.99 for every subscription sold through your link',
+                description: 'Earn money from both subscriptions and donations sold through your link',
               },
               {
                 icon: TrendingUp,
