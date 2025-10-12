@@ -6,9 +6,10 @@ export default function Navbar() {
   const [showCommunityDropdown, setShowCommunityDropdown] = useState(false);
 
   const communityLinks = [
-    { name: 'Discord', url: 'https://discord.com/invite/duelcore', primary: true },
-    { name: 'YouTube', url: 'https://www.youtube.com/@DuelWarriors_Core', primary: false },
-    { name: 'TikTok', url: 'https://www.tiktok.com/@coregamestv?is_from_webapp=1&sender_device=pc', primary: false },
+    { name: 'Community Hub', url: '/community', primary: true, external: false },
+    { name: 'Discord', url: 'https://discord.com/invite/duelcore', primary: false, external: true },
+    { name: 'YouTube', url: 'https://www.youtube.com/@DuelWarriors_Core', primary: false, external: true },
+    { name: 'TikTok', url: 'https://www.tiktok.com/@coregamestv?is_from_webapp=1&sender_device=pc', primary: false, external: true },
   ];
 
   return (
@@ -45,28 +46,51 @@ export default function Navbar() {
             {showCommunityDropdown && (
               <div className="absolute top-full right-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-sm border-2 border-cyan-500/30 rounded-xl shadow-2xl shadow-cyan-500/20 overflow-hidden">
                 {communityLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex items-center justify-between px-5 py-4 transition-all group cursor-pointer ${
-                      link.primary
-                        ? 'bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border-b-2 border-cyan-500/50 hover:from-cyan-600/40 hover:to-blue-600/40'
-                        : 'hover:bg-gray-800/50'
-                    }`}
-                  >
-                    <span className={`font-semibold ${
-                      link.primary
-                        ? 'text-cyan-400 text-lg'
-                        : 'text-gray-300'
-                    } group-hover:text-cyan-300 transition-colors`}>
-                      {link.name}
-                    </span>
-                    <ExternalLink className={`w-4 h-4 ${
-                      link.primary ? 'text-cyan-400' : 'text-gray-400'
-                    } group-hover:text-cyan-300 transition-all group-hover:translate-x-1`} />
-                  </a>
+                  link.external ? (
+                    <a
+                      key={link.name}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center justify-between px-5 py-4 transition-all group cursor-pointer ${
+                        link.primary
+                          ? 'bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border-b-2 border-cyan-500/50 hover:from-cyan-600/40 hover:to-blue-600/40'
+                          : 'hover:bg-gray-800/50'
+                      }`}
+                    >
+                      <span className={`font-semibold ${
+                        link.primary
+                          ? 'text-cyan-400 text-lg'
+                          : 'text-gray-300'
+                      } group-hover:text-cyan-300 transition-colors`}>
+                        {link.name}
+                      </span>
+                      <ExternalLink className={`w-4 h-4 ${
+                        link.primary ? 'text-cyan-400' : 'text-gray-400'
+                      } group-hover:text-cyan-300 transition-all group-hover:translate-x-1`} />
+                    </a>
+                  ) : (
+                    <Link
+                      key={link.name}
+                      to={link.url}
+                      className={`flex items-center justify-between px-5 py-4 transition-all group cursor-pointer ${
+                        link.primary
+                          ? 'bg-gradient-to-r from-cyan-600/20 to-blue-600/20 border-b-2 border-cyan-500/50 hover:from-cyan-600/40 hover:to-blue-600/40'
+                          : 'hover:bg-gray-800/50'
+                      }`}
+                    >
+                      <span className={`font-semibold ${
+                        link.primary
+                          ? 'text-cyan-400 text-lg'
+                          : 'text-gray-300'
+                      } group-hover:text-cyan-300 transition-colors`}>
+                        {link.name}
+                      </span>
+                      <ChevronDown className={`w-4 h-4 -rotate-90 ${
+                        link.primary ? 'text-cyan-400' : 'text-gray-400'
+                      } group-hover:text-cyan-300 transition-all group-hover:translate-x-1`} />
+                    </Link>
+                  )
                 ))}
               </div>
             )}
