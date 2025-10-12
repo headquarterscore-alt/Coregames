@@ -11,8 +11,6 @@ export default function Hero() {
           style={{ backgroundImage: "url('/LOGO DuelCore (2000x2000) Henri.png')" }}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
-
         <div className="relative z-10 text-center max-w-5xl mx-auto">
           <div className="flex justify-center">
             <img
