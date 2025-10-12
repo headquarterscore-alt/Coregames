@@ -1,7 +1,7 @@
 import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart, X, Trophy, CheckCircle2 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
-import { stripeProducts } from '../stripe-config';
+import { stripeProducts, stripeDonationPriceId } from '../stripe-config';
 import { useSubscription } from '../hooks/useSubscription';
 import { usePageCache } from '../contexts/PageCacheContext';
 import { useLeaderboard } from '../hooks/useLeaderboard';
@@ -183,7 +183,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
             'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           },
           body: JSON.stringify({
-            amount: 10,
+            price_id: stripeDonationPriceId,
             success_url: `${window.location.origin}/success`,
             cancel_url: window.location.href,
             email: email || undefined,

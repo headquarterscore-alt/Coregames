@@ -31,10 +31,10 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    const { amount, success_url, cancel_url, email, name, affiliate_code } = await req.json();
+    const { price_id, success_url, cancel_url, email, name, affiliate_code } = await req.json();
 
-    if (!amount || amount < 1 || amount > 500) {
-      return new Response(JSON.stringify({ error: 'Invalid donation amount' }), {
+    if (!price_id) {
+      return new Response(JSON.stringify({ error: 'Missing price_id' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -51,14 +51,7 @@ Deno.serve(async (req: Request) => {
       payment_method_types: ['card'],
       line_items: [
         {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: 'DuelCore Donation',
-              description: `Support DuelCore development - $${amount} donation`,
-            },
-            unit_amount: Math.round(amount * 100),
-          },
+          price: price_id,
           quantity: 1,
         },
       ],
@@ -87,7 +80,7 @@ Deno.serve(async (req: Request) => {
 
     const session = await stripe.checkout.sessions.create(sessionParams);
 
-    console.log(`Created donation session ${session.id} for $${amount}`);
+    console.log(`Created donation session ${session.id}`);
 
     return new Response(
       JSON.stringify({ sessionId: session.id, url: session.url }),

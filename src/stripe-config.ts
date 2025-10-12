@@ -19,3 +19,5 @@ export const stripeProducts: StripeProduct[] = [
     currencySymbol: '€',
   },
 ];
+
+export const stripeDonationPriceId = 'price_DONATION_PRICE_ID_HERE';
