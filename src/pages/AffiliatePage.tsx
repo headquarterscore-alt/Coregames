@@ -1,8 +1,8 @@
-import { Copy, DollarSign, Link as LinkIcon, TrendingUp, Home } from 'lucide-react';
+import { Copy, DollarSign, Link as LinkIcon, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
 import { supabase, Affiliate as AffiliateType } from '../lib/supabase';
-import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 export default function AffiliatePage() {
   const [name, setName] = useState('');
@@ -92,25 +92,7 @@ export default function AffiliatePage() {
 
   return (
     <div className="min-h-screen bg-black">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src="/LOGO DuelCore (512x512) - by Henri.png"
-              alt="DuelCore"
-              className="h-10 w-10"
-            />
-            <span className="text-xl font-bold text-white">DuelCore</span>
-          </Link>
-          <Link
-            to="/"
-            className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors"
-          >
-            <Home className="w-4 h-4" />
-            Back to Home
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       <section className="min-h-screen py-32 px-6 bg-gradient-to-b from-black via-gray-900 to-black flex items-center">
         <div className="max-w-6xl mx-auto">
