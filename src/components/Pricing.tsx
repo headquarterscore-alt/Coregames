@@ -95,7 +95,42 @@ export default function Pricing({ affiliateCode }: PricingProps) {
 
   const handleDonate = async () => {
     setIsDonating(true);
-    window.location.href = 'https://buy.stripe.com/6oUbJ30Bu4SabJk9Tr7bW03';
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-donation`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({
+            amount: 10,
+            success_url: `${window.location.origin}/success`,
+            cancel_url: window.location.href,
+            email: email || undefined,
+            name: name || undefined,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.error) {
+        alert('Donation error: ' + data.error);
+        setIsDonating(false);
+        return;
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error: any) {
+      console.error('Donation error:', error);
+      alert('An error occurred. Please try again.');
+      setIsDonating(false);
+    }
   };
 
   return (
@@ -377,7 +412,6 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                     disabled={isDonating}
                     className="w-full bg-gradient-to-r from-pink-600 via-purple-600 to-red-600 text-white py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:shadow-pink-500/50 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
                   >
-                    <Heart className="w-6 h-6" />
                     {isDonating ? 'Redirecting...' : 'Make a Donation'}
                   </button>
 
