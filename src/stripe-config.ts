@@ -20,4 +20,4 @@ export const stripeProducts: StripeProduct[] = [
   },
 ];
 
-export const stripeDonationPriceId = 'price_DONATION_PRICE_ID_HERE';
+export const stripeDonationPriceId = 'price_1SH88S3ftBoDvYm1RSTaZ4En';
