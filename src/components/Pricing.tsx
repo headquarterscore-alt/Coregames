@@ -212,7 +212,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                     <Gem className="w-6 h-6 text-purple-400" />
                   </div>
                   <a
-                    href="#affiliate"
+                    href="/affiliate"
                     className="text-sm text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1.5 bg-cyan-500/10 px-4 py-2 rounded-lg border border-cyan-500/30 hover:border-cyan-500/50"
                   >
                     <Star className="w-4 h-4" />

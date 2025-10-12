@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Hero from './components/Hero';
 import Pricing from './components/Pricing';
-import Affiliate from './components/Affiliate';
 import Footer from './components/Footer';
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
     <div className="min-h-screen bg-black">
       <Hero />
       <Pricing affiliateCode={affiliateCode} />
-      <Affiliate />
       <Footer />
     </div>
   );
