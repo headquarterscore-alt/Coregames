@@ -411,7 +411,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
             <div className="bg-gradient-to-br from-pink-600 via-purple-600 to-red-600 p-1 rounded-3xl shadow-2xl shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-500 hover:scale-[1.02] mt-8">
               <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-8">
                 <div className="text-center mb-6">
-                  <h3 className="text-3xl font-bold text-white mb-2">Donation ❤️</h3>
+                  <h3 className="text-3xl font-bold text-white mb-2">Support the server</h3>
                 </div>
 
                 <div className="space-y-6">
@@ -431,12 +431,6 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                     <Trophy className="w-5 h-5" />
                     View Leaderboard
                   </button>
-
-                  <div className="bg-pink-500/10 border border-pink-500/30 rounded-lg p-4">
-                    <p className="text-gray-400 text-sm text-center">
-                      You'll be redirected to Stripe to securely complete your donation with your chosen amount
-                    </p>
-                  </div>
                 </div>
 
                 <p className="text-center text-gray-500 text-xs mt-4">
