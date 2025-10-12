@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Hero from './components/Hero';
 import Pricing from './components/Pricing';
 import Footer from './components/Footer';
 
 function App() {
   const [affiliateCode, setAffiliateCode] = useState<string | undefined>();
+  const [key, setKey] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -20,10 +23,15 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    // Force remount of Pricing component when returning to home page
+    setKey(prev => prev + 1);
+  }, [location.pathname]);
+
   return (
     <div className="min-h-screen bg-black">
       <Hero />
-      <Pricing affiliateCode={affiliateCode} />
+      <Pricing key={key} affiliateCode={affiliateCode} />
       <Footer />
     </div>
   );
