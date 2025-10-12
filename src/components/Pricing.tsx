@@ -407,37 +407,16 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                     Need help or have questions? Reach out to our support team on Discord.
                   </p>
 
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3 text-white">
-                      <span className="text-gray-400">Discord:</span>
-                      <span className="font-mono bg-gray-800 px-3 py-1.5 rounded-lg">h9999</span>
-                    </div>
-
-                    <a
-                      href="https://discord.com/users/239327215651651596"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-3 rounded-xl font-semibold hover:shadow-xl hover:shadow-blue-500/50 hover:scale-[1.02] transition-all duration-300"
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      Message on Discord
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
-
-                  <div className="mt-6 pt-6 border-t border-gray-800">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src="/ssss.gif"
-                        alt="Henri"
-                        className="h-12 w-12 rounded-full border-2 border-gray-700"
-                      />
-                      <div>
-                        <p className="text-white font-semibold">Henri</p>
-                        <p className="text-gray-400 text-sm">Core Games Creator</p>
-                      </div>
-                    </div>
-                  </div>
+                  <a
+                    href="https://discord.com/users/239327215651651596"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-gray-200 via-white to-gray-300 text-gray-900 py-3 rounded-xl font-semibold hover:shadow-xl hover:shadow-gray-500/50 hover:scale-[1.02] transition-all duration-300"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Message on Discord
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
             </div>
