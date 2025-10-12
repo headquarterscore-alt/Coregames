@@ -25,6 +25,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
   const [leaderboardData, setLeaderboardData] = useState<DonationLeaderboardEntry[]>([]);
 
   useEffect(() => {
+    // Reset loading states when component mounts or updates
     setIsLoading(false);
     setIsDonating(false);
 
@@ -35,6 +36,19 @@ export default function Pricing({ affiliateCode }: PricingProps) {
       }
     }
   }, [affiliateCode]);
+
+  useEffect(() => {
+    // Reset loading states when returning to the page
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        setIsLoading(false);
+        setIsDonating(false);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
 
   const fetchLeaderboard = async () => {
     const { data, error } = await supabase
