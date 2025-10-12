@@ -6,8 +6,24 @@
   html, body {
     @apply bg-black;
   }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 html {
   scroll-behavior: smooth;
+  content-visibility: auto;
+}
+
+body {
+  overflow-y: scroll;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  isolation: isolate;
 }

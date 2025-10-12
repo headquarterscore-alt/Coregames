@@ -1,8 +1,10 @@
 import { Check, Zap, Crown, Eye, Image, Shield, RefreshCw, Clock, Zap as Lightning, Palette, Star, MessageCircle, ExternalLink, ChevronDown, ChevronUp, Gem, Heart, X, Trophy, CheckCircle2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { stripeProducts } from '../stripe-config';
 import { useSubscription } from '../hooks/useSubscription';
+import { usePageCache } from '../contexts/PageCacheContext';
+import { useLeaderboard } from '../hooks/useLeaderboard';
 
 interface DonationLeaderboardEntry {
   id: string;
@@ -17,14 +19,18 @@ interface PricingProps {
 }
 
 export default function Pricing({ affiliateCode }: PricingProps) {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const { getSupportPageState, setSupportPageState } = usePageCache();
+  const cachedState = getSupportPageState();
+  const isInitialMount = useRef(true);
+
+  const [email, setEmail] = useState(cachedState?.email || '');
+  const [name, setName] = useState(cachedState?.name || '');
   const [isLoading, setIsLoading] = useState(false);
-  const [showAllFeatures, setShowAllFeatures] = useState(false);
+  const [showAllFeatures, setShowAllFeatures] = useState(cachedState?.showAllFeatures || false);
   const [isDonating, setIsDonating] = useState(false);
-  const [showLeaderboard, setShowLeaderboard] = useState(false);
-  const [leaderboardData, setLeaderboardData] = useState<DonationLeaderboardEntry[]>([]);
+  const [showLeaderboard, setShowLeaderboard] = useState(cachedState?.showLeaderboard || false);
   const { subscription } = useSubscription();
+  const { data: leaderboardData } = useLeaderboard();
 
   useEffect(() => {
     // Reset loading states when component mounts or updates
@@ -73,21 +79,25 @@ export default function Pricing({ affiliateCode }: PricingProps) {
     };
   }, []);
 
-  const fetchLeaderboard = async () => {
-    const { data, error } = await supabase
-      .from('donation_leaderboard')
-      .select('*')
-      .order('amount', { ascending: false })
-      .limit(2);
-
-    if (!error && data) {
-      setLeaderboardData(data);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
     }
-  };
+
+    setSupportPageState({
+      email,
+      name,
+      donationEmail: email,
+      donationName: name,
+      showAllFeatures,
+      showLeaderboard,
+      leaderboardData,
+    });
+  }, [email, name, showAllFeatures, showLeaderboard, leaderboardData, setSupportPageState]);
 
   const openLeaderboard = () => {
     setShowLeaderboard(true);
-    fetchLeaderboard();
   };
 
   const handleSubscribe = async (e: React.FormEvent) => {

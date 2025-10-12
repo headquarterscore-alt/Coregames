@@ -1,10 +1,14 @@
 import { Copy, DollarSign, Link as LinkIcon, TrendingUp } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase, Affiliate as AffiliateType } from '../lib/supabase';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import { prefetchLeaderboard } from '../hooks/useLeaderboard';
 
 export default function AffiliatePage() {
+  useEffect(() => {
+    prefetchLeaderboard();
+  }, []);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');

@@ -1,6 +1,8 @@
 import { ExternalLink } from 'lucide-react';
+import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { prefetchLeaderboard } from '../hooks/useLeaderboard';
 
 interface SocialPlatform {
   name: string;
@@ -11,6 +13,9 @@ interface SocialPlatform {
 }
 
 export default function CommunityPage() {
+  useEffect(() => {
+    prefetchLeaderboard();
+  }, []);
   const platforms: SocialPlatform[] = [
     {
       name: 'Discord',
