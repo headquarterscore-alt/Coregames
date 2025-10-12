@@ -48,8 +48,29 @@ export default function Pricing({ affiliateCode }: PricingProps) {
       }
     };
 
+    const handlePageShow = (event: PageTransitionEvent) => {
+      // Reset states when navigating back (including from cache)
+      if (event.persisted) {
+        setIsLoading(false);
+        setIsDonating(false);
+      }
+    };
+
+    const handleFocus = () => {
+      // Reset states when window regains focus
+      setIsLoading(false);
+      setIsDonating(false);
+    };
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pageshow', handlePageShow);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pageshow', handlePageShow);
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const fetchLeaderboard = async () => {
