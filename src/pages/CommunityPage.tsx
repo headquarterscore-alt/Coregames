@@ -22,28 +22,28 @@ export default function CommunityPage() {
       url: 'https://discord.com/invite/duelcore',
       description: 'Join our Discord server to chat with the community, get support, participate in events, and stay updated with the latest announcements.',
       color: 'from-[#5865F2] to-[#4752C4]',
-      icon: '💬',
+      icon: '',
     },
     {
       name: 'Roblox Group',
       url: 'https://www.roblox.com/communities/33040305/DuelCore#!/about',
       description: 'Become a member of our official Roblox group to access exclusive games, special perks, and connect with fellow players.',
       color: 'from-red-500 to-red-600',
-      icon: '🎮',
+      icon: '',
     },
     {
       name: 'YouTube',
       url: 'https://www.youtube.com/@DuelWarriors_Core',
       description: 'Subscribe to our YouTube channel for gameplay highlights, tutorials, updates, and exclusive content from the DuelCore community.',
       color: 'from-red-600 to-red-700',
-      icon: '▶️',
+      icon: '',
     },
     {
       name: 'TikTok',
       url: 'https://www.tiktok.com/@coregamestv?is_from_webapp=1&sender_device=pc',
       description: 'Follow us on TikTok for short-form content, quick tips, funny moments, and behind-the-scenes glimpses of our games.',
       color: 'from-[#00f2ea] to-[#ff0050]',
-      icon: '🎵',
+      icon: '',
     },
   ];
 
@@ -87,10 +87,7 @@ export default function CommunityPage() {
                     rel="noopener noreferrer"
                     className={`flex items-center justify-between p-6 rounded-xl bg-gradient-to-r ${platform.color} text-white font-semibold hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-2xl group`}
                   >
-                    <div className="flex items-center gap-4">
-                      <span className="text-4xl">{platform.icon}</span>
-                      <span className="text-2xl">{platform.name}</span>
-                    </div>
+                    <span className="text-2xl">{platform.name}</span>
                     <ExternalLink className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                   </a>
                 ))}

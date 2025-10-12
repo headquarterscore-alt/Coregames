@@ -227,9 +227,8 @@ export default function Pricing({ affiliateCode }: PricingProps) {
             className="mb-8 bg-gradient-to-r from-green-600 to-emerald-500 text-white p-5 rounded-2xl text-center shadow-2xl shadow-green-500/20 animate-pulse"
           >
             <p className="text-lg font-semibold">
-              You're using affiliate code: <span className="font-mono bg-white/20 px-3 py-1 rounded">{affiliateCode}</span>
+              Using code: <span className="font-mono bg-white/20 px-3 py-1 rounded">{affiliateCode}</span>
             </p>
-            <p className="text-sm mt-1">Your referrer will earn 30% commission on this purchase!</p>
           </div>
         )}
 
