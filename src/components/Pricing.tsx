@@ -422,10 +422,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
             <div className="bg-gradient-to-br from-pink-600 via-purple-600 to-red-600 p-1 rounded-3xl shadow-2xl shadow-pink-500/30 hover:shadow-pink-500/50 transition-all duration-500 hover:scale-[1.02] mt-8">
               <div className="bg-gradient-to-b from-gray-900 to-black rounded-3xl p-8">
                 <div className="text-center mb-6">
-                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <Heart className="w-7 h-7 text-pink-500" />
-                    <h3 className="text-3xl font-bold text-white">Donation</h3>
-                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-2">Donation ❤️</h3>
                   <p className="text-gray-400 text-sm">Support us with any amount you choose</p>
                 </div>
 
