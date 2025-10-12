@@ -38,7 +38,7 @@ export default function Pricing({ affiliateCode }: PricingProps) {
       .from('donation_leaderboard')
       .select('*')
       .order('amount', { ascending: false })
-      .limit(10);
+      .limit(2);
 
     if (!error && data) {
       setLeaderboardData(data);
@@ -424,12 +424,14 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                 <div className="text-center mb-6">
                   <div className="flex items-center justify-center gap-3 mb-2">
                     <Heart className="w-7 h-7 text-pink-500" />
-                    <button
-                      onClick={openLeaderboard}
-                      className="text-3xl font-bold text-white hover:text-pink-400 transition-colors cursor-pointer"
-                    >
-                      Donation
-                    </button>
+                    <h3 className="text-3xl font-bold text-white">
+                      Donation - <button
+                        onClick={openLeaderboard}
+                        className="text-pink-400 hover:text-pink-300 transition-colors cursor-pointer underline decoration-pink-500/50 hover:decoration-pink-400"
+                      >
+                        Leaderboard
+                      </button>
+                    </h3>
                   </div>
                   <p className="text-gray-400 text-sm">Support us with any amount you choose</p>
                 </div>
