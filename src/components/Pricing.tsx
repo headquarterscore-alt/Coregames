@@ -386,7 +386,6 @@ export default function Pricing({ affiliateCode }: PricingProps) {
                       onClick={openLeaderboard}
                       className="w-full bg-gradient-to-r from-yellow-600 to-orange-500 text-white py-4 rounded-xl font-semibold text-lg hover:shadow-xl hover:shadow-yellow-500/50 hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2"
                     >
-                      <Trophy className="w-5 h-5" />
                       View Leaderboard
                     </button>
                   </div>
